@@ -1,2 +1,1 @@
-from model.base_model import BaseModel
-from model.model import ViT
+from model.vit_model import get_vit

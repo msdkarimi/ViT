@@ -1,14 +1,14 @@
-from model import ViT
-from model_builder import Registry
+import sys
+from model import get_vit
 from utils import get_config
-import torch
 
 
-def main(cfg: dict):
-    model = Registry.from_conf_create_model(cfg['MODEL']['NAME'], config=cfg['MODEL'])
+def main(config: dict):
+    model = get_vit(config)
     print(model)
 
 
 if __name__ == '__main__':
-    cfg = get_config()
-    main(cfg)
+    config = get_config()
+    main(config)
+    sys.exit(0)
