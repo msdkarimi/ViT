@@ -22,3 +22,21 @@ class PatchEmbedding(nn.Module):
         x = torch.cat((cls_tokes, x), dim=1)
         x += self.positional_encoding
         return x
+
+
+class MultiHeadSelfAttention(nn.Module):
+    def __init__(self):
+        super(MultiHeadSelfAttention, self).__init__()
+        pass
+
+    def forward(self):
+        pass
+
+
+class FeedForwardNetwork(nn.Module):
+    def __init__(self):
+        super(FeedForwardNetwork, self).__init__()
+        pass
+
+    def forward(self):
+        pass

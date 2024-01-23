@@ -1,7 +1,7 @@
 _registered_models = dict()
 
 
-def build_model(config, model_name, **kwargs):
+def build(config, model_name, **kwargs):
     if model_name not in _registered_models:
         raise ValueError(f'Unknown model: {model_name}')
 

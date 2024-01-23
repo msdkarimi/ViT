@@ -1,14 +1,15 @@
 import sys
-from model import build_model
-from utils import get_config
+from config.args import args
+from utils.misc import get_config
+from experiments import Experiment
 
 
 def main(config: dict):
-    model = build_model(config, config['MODEL']['NAME'])
-    print(model)
+    experiment = Experiment(config, args)
+    pass
 
 
 if __name__ == '__main__':
-    config = get_config()
+    config = get_config(args)
     main(config)
     sys.exit(0)
