@@ -1,10 +1,10 @@
 import sys
-from model import get_vit
+from model import build_model
 from utils import get_config
 
 
 def main(config: dict):
-    model = get_vit(config)
+    model = build_model(config, config['MODEL']['NAME'])
     print(model)
 
 

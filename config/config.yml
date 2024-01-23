@@ -1,7 +1,10 @@
 MODEL:
-  NAME: 'ViT'
+  NAME: 'vit_model'
   INPUT_CHANNEL: 3
   INPUT_H: 224
   INPUT_W: 224
   PATCH_DIM: 16
   BATCH_SIZE: 8
+  ENCODER:
+    NAME: 'encoder'
+    INFO : 'NOT YET'
