@@ -4,12 +4,15 @@ from model import build
 from utils.model_utils import PatchEmbedding
 
 
-class ViT(nn.Module):
+class VisionTransformer(nn.Module):
     def __init__(self, config: dict):
-        super(ViT, self).__init__()
+        super(VisionTransformer, self).__init__()
 
-        self.projection = PatchEmbedding(img_dim=(config['INPUT_H'], config['INPUT_W']), input_channel=config['INPUT_CHANNEL'], patch_dim=config['PATCH_DIM'])
-        self.encoder = build(config['ENCODER'], config['ENCODER']['NAME'])
+        self.projection = PatchEmbedding.from_config(config)
+        self.encoder = build(config['ENCODER'], config['ENCODER']['NAME'], emb_dim=config['INPUT_CHANNEL']*config['PATCH_DIM'] ** 2)
+        # TODO __implement MLP as classifier which takes first tokes self.feature_emb[0, :]
+        self.classifier = None
+        # self.feature_emb = nn.Sequential(self.projection, self.encoder)
 
     def forward(self, x):
         x = self.patch_embedding(x)
@@ -17,4 +20,4 @@ class ViT(nn.Module):
 
 @register
 def get_vit(config: dict):
-    return ViT(config['MODEL'])
+    return VisionTransformer(config['MODEL'])

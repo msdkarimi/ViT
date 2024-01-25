@@ -6,7 +6,8 @@ from experiments import Experiment
 
 def main(config: dict):
     experiment = Experiment(config, args)
-    pass
+    print(experiment.model)
+    # TODO __
 
 
 if __name__ == '__main__':

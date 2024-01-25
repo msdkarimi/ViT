@@ -13,3 +13,5 @@ def register(fn):
     model_name = module_name_split[-1]
     _registered_models[model_name] = fn
     return fn
+
+
