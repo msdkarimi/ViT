@@ -8,7 +8,7 @@ class ViT(nn.Module):
     def __init__(self, config: dict):
         super(ViT, self).__init__()
 
-        self.patch_embedding = PatchEmbedding(img_dim=(config['INPUT_H'], config['INPUT_W']), input_channel=config['INPUT_CHANNEL'], patch_dim=config['PATCH_DIM'])
+        self.projection = PatchEmbedding(img_dim=(config['INPUT_H'], config['INPUT_W']), input_channel=config['INPUT_CHANNEL'], patch_dim=config['PATCH_DIM'])
         self.encoder = build(config['ENCODER'], config['ENCODER']['NAME'])
 
     def forward(self, x):

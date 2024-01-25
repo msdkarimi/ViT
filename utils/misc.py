@@ -9,15 +9,6 @@ def get_config(args):
 
 def move_to_device(a_batch, device_is_cpu: bool) -> tuple[torch.Tensor, torch.Tensor]:
     x, y = a_batch
-    if device_is_cpu:
-        return x.to('cpu'), y.to('cpu')
-    else:
-        return x.to('cuda:0'), y.to('cuda:0')
+    device = 'cpu' if device_is_cpu else 'cuda:0'
+    return x.to(device), y.to(device)
 
-
-def save_model(model, criteria, scheduler, loss, epoch):
-    pass
-
-
-def load_model(checkpoint_path):
-    pass
