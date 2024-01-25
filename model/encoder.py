@@ -6,7 +6,11 @@ from utils import MultiHeadSelfAttention
 class ViTEncoder(nn.Module):
     def __init__(self, config, *, emb_dim: int):
         super(ViTEncoder, self).__init__()
-        self.layers = nn.ModuleList([EncoderBlock.from_config(config, emb_dim=emb_dim) for _ in range(config['ENCODER_LAYERS'])])
+        
+        self.layers = nn.ModuleList([
+            EncoderBlock.from_config(config, emb_dim=emb_dim)
+            for _ in range(config['ENCODER_LAYERS'])
+        ])
 
     def forward(self, x):
         for layer in self.layers:
