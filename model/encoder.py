@@ -8,7 +8,7 @@ class ViTEncoder(nn.Module):
         super(ViTEncoder, self).__init__()
 
         self.layers = nn.ModuleList([
-            EncoderBlock.from_config(config, emb_dim=emb_dim)
+            EncoderLayer.from_config(config, emb_dim=emb_dim)
             for _ in range(config['ENCODER_LAYERS'])
         ])
 
@@ -17,24 +17,38 @@ class ViTEncoder(nn.Module):
             x = layer(x)
 
 
-class EncoderBlock(nn.Module):
+class EncoderLayer(nn.Module):
     def __init__(self, config, *, emb_dim: int):
-        super(EncoderBlock, self).__init__()
+        super(EncoderLayer, self).__init__()
         self.multi_head_self_attention = MultiHeadSelfAttention.from_config(config, emb_dim=emb_dim)
-
-        # TODO __add FFN
-        self.ffn = None
-        # TODO __add res conn.
-        self.add_norm = None
+        self.mlp = MLP.from_config(config, emb_dim=emb_dim)
+        self.norm1 = nn.LayerNorm(emb_dim)
+        self.norm2 = nn.LayerNorm(emb_dim)
 
     @classmethod
     def from_config(cls, config, *, emb_dim: int):
         return cls(config, emb_dim=emb_dim)
 
-    def forward(self, q, k, v):
-        # TODO __forward pass
-        pass
+    def forward(self, x):
+        x = x + self.multi_head_self_attention(*[self.norm1(x)]*3)
+        return x + self.mlp(self.norm2(x))
 
+
+class MLP(nn.Module):
+    def __init__(self, *, emb_dim: int, ff_hidden_layer_scale: int, dropout: float = None):
+        super(MLP, self).__init__()
+
+        self.fcl1 = nn.Linear(emb_dim, ff_hidden_layer_scale * emb_dim)
+        self.fcl2 = nn.Linear(ff_hidden_layer_scale * emb_dim, emb_dim)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(p=dropout)
+
+    @classmethod
+    def from_config(cls, config, *, emb_dim: int):
+        return cls(emb_dim=emb_dim, ff_hidden_layer_scale=config['HIDDEN_LAYER_SCALE'], dropout=config['DROP_OUT'])
+
+    def forward(self, x):
+        return self.fcl2(self.dropout(self.relu(self.fcl1(x))))
 
 
 @register

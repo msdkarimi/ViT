@@ -82,9 +82,9 @@ class MultiHeadSelfAttention(nn.Module):
         return self.output(output), context_aware_scores
 
 
-class MLP(nn.Module):
+class ClassificationHead(nn.Module):
     def __init__(self, config):
-        super(MLP, self).__init__()
+        super(ClassificationHead, self).__init__()
 
         # TODO __implement class properties
 

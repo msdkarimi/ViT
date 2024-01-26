@@ -1,3 +1,4 @@
+from model.base_module import BaseModule
 from model.build import register
 from model.build import build
 from model.vit_model import get_vit
