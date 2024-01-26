@@ -82,14 +82,16 @@ class MultiHeadSelfAttention(nn.Module):
         return self.output(output), context_aware_scores
 
 
-class FeedForwardNetwork(nn.Module):
-    def __init__(self):
-        super(FeedForwardNetwork, self).__init__()
-        pass
+class MLP(nn.Module):
+    def __init__(self, config):
+        super(MLP, self).__init__()
+
+        # TODO __implement class properties
 
     @classmethod
     def from_config(cls, config):
-        return cls()
+        return cls(config)
 
-    def forward(self):
+    def forward(self, x):
+        # TODO __implement forward pass
         pass
