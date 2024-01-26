@@ -5,6 +5,7 @@ import torch
 
 class Experiment:
 
+    # TODO __ better to not use conf
     def __init__(self, config, args):
 
         self.args = args
@@ -13,9 +14,17 @@ class Experiment:
         self.criteria = None
         self.scheduler = None
 
+    @classmethod
+    def from_config(cls, config, args):
+        return cls(config, args)
+
     def train_model(self, a_batch):
         self.model.train()
         x, y = move_to_device(a_batch, self.args.cpu)
+
+        # TODO __calculate loss
+
+        # TODO __back propagation
         pass
 
     def validate_model(self, a_batch):

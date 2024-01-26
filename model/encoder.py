@@ -15,7 +15,6 @@ class ViTEncoder(nn.Module):
     def forward(self, x):
         for layer in self.layers:
             x = layer(x)
-        pass
 
 
 class EncoderBlock(nn.Module):
@@ -31,6 +30,12 @@ class EncoderBlock(nn.Module):
     @classmethod
     def from_config(cls, config, *, emb_dim: int):
         return cls(config, emb_dim=emb_dim)
+
+    def forward(self, q, k, v):
+        # TODO __forward pass
+        pass
+
+
 
 @register
 def get_encoder(config, **kwargs):
